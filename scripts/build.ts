@@ -7,7 +7,6 @@ await new Deno.Command("cargo", {
   args: ["build", "--release", "--target", "wasm32-unknown-unknown"],
 }).spawn().status;
 
-
 const targetFolder = Deno.env.get("CARGO_TARGET_DIR") || "target";
 
 const wasm = await Deno.readFile(

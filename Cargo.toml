@@ -1,9 +1,9 @@
 [package]
 name = "bcrypt"
 description = "bcrypt hashing wasm module for deno"
-repository = "https://github.com/denosaurs/argontwo"
+repository = "https://github.com/Blckbrry-Pi/deno-bcrypt"
 license = "MIT"
-version = "0.1.0"
+version = "0.15.2"
 authors = ["Skyler Calaman"]
 edition = "2021"
 publish = false

@@ -1,26 +1,23 @@
 {
-  "name": "@blackberry/bcrypt",
-  "version": "0.15.1",
-  "exports": "./mod.ts",
-  "imports": {
-    "@std/encoding": "jsr:@std/encoding@0.221",
-    "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4"
-  },
-  "tasks": {
-    "build": "deno run -A scripts/build.ts"
-  },
-  "publish": {
-      "exclude": [
-        "**"
-      ],
-      "include": [
-        "wasm/*",
-        "scripts/*",
-        "*.md",
-        "*.ts",
-        "*.toml",
-        "deno.json",
-        "LICENSE"
-      ]
-  }
+    "name": "@blackberry/bcrypt",
+    "version": "0.15.2",
+    "exports": "./mod.ts",
+    "imports": {
+        "@std/encoding": "jsr:@std/encoding@1.0.1",
+        "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4"
+    },
+    "tasks": {
+        "build": "deno run -A scripts/build.ts"
+    },
+    "publish": {
+        "include": [
+            "wasm/*",
+            "scripts/*",
+            "*.md",
+            "*.ts",
+            "*.toml",
+            "deno.json",
+            "LICENSE"
+        ]
+    }
 }

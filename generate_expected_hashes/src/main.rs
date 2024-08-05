@@ -12,4 +12,5 @@ fn main() {
     println!("Hello, world!");
     println!("hash: {:?}", two_b_hash("password", "saltsaltsaltsalt", 10));
     println!("hash: {:?}", two_b_hash("password", "saltsaltsaltsalt", 13));
+    println!("hash: {:?}", two_b_hash("very-cool-password", "salty salt woo!!", 12));
 }
