@@ -26,12 +26,8 @@ function transfer(buffer: BufferSource): [number, number] {
   return [pointer, length];
 }
 
-function maybeTransfer(buffer?: BufferSource): [number, number] {
-  if (buffer != null) {
-    return transfer(buffer);
-  }
-  return [0, 0];
-}
+const MAX_OUTPUT_BYTES = 100;
+const MAX_MATCHES_BYTES = 16;
 
 /**
  * The three different Argon2 algorithm variants as described by [wikipedia](https://en.wikipedia.org/wiki/Argon2):
@@ -48,102 +44,111 @@ export type Argon2Algorithm = "Argon2d" | "Argon2i" | "Argon2id";
  * - **0x10**: Version 16, performs overwrites internally.
  * - **0x13** (default): Version 19, performs XOR internally.
  */
-export type Argon2Version = 0x10 | 0x13;
+export type BcryptVersion = "2a" | "2x" | "2y" | "2b";
 
-export type Argon2Params = {
-  algorithm: Argon2Algorithm;
-  version: Argon2Version;
-  secret?: ArrayBufferLike;
+export type BcryptParams = {
+  version: BcryptVersion;
   /**
-   * The length of the output hash.
+   * The desired cost/work factor of the bcrypt hash
    *
-   * @default 32
+   * @default 10
    */
-  outputLength?: number;
-  /**
-   * Memory size in 1 KiB blocks. Between 1 and (2^32)-1.
-   *
-   * When {@link Argon2Params.algorithm} is Argon2i the default is changed to 12288 as per OWASP recommendations.
-   *
-   * @default 19456
-   */
-  mCost?: number;
-  /**
-   * Number of iterations. Between 1 and (2^32)-1.
-   *
-   * When {@link Argon2Params.algorithm} is Argon2i the default is changed to 3 as per OWASP recommendations.
-   *
-   * @default 2
-   */
-  tCost?: number;
-  /**
-   * Degree of parallelism. Between 1 and 255.
-   *
-   * @default 1
-   */
-  pCost?: number;
+  cost: number;
 };
 
-const argon2AlgorithmEnum: Record<Lowercase<Argon2Algorithm>, number> = {
-  "argon2d": 0,
-  "argon2i": 1,
-  "argon2id": 2,
+const versionEnum: Record<BcryptVersion, number> = {
+  "2a": "a".charCodeAt(0),
+  "2x": "x".charCodeAt(0),
+  "2y": "y".charCodeAt(0),
+  "2b": "b".charCodeAt(0),
 };
 
 /**
- * Computes the Argon2 hash for the password, salt and parameters.
+ * Verifies the bcrypt hash for the password, salt and parameters.
  */
 export function hash(
   password: BufferSource,
-  salt: BufferSource,
-  params?: Argon2Params,
-): ArrayBuffer {
-  params ??= {
-    algorithm: "Argon2id",
-    version: 0x13,
+  salt?: BufferSource,
+  params?: BcryptParams,
+): string {
+  const finalParams = {
+    version: params?.version ?? "2b",
+    cost: params?.cost ?? 10,
   };
-  params.outputLength ??= 32;
-  // These defaults come from https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#argon2id
-  params.mCost ??= params.algorithm === "Argon2i" ? 12288 : 19456;
-  params.tCost ??= params.algorithm === "Argon2i" ? 3 : 2;
-  params.pCost ??= 1;
+
+  const verifiedSalt = salt ?? crypto.getRandomValues(new Uint8Array(16));
+  if (verifiedSalt.byteLength !== 16) {
+    throw new Error("Salt must be 16 bytes long.");
+  }
 
   const [passwordPtr, passwordLen] = transfer(password);
-  const [saltPtr, saltLen] = transfer(salt);
-  const [secretPtr, secretLen] = maybeTransfer(params?.secret);
-  const outputPtr = wasm.alloc(params.outputLength);
+  const [saltPtr, saltLen] = transfer(verifiedSalt);
+  const finalOutputLenPtr = wasm.alloc(16);
+  const outputPtr = wasm.alloc(MAX_OUTPUT_BYTES);
 
   wasm.hash(
     passwordPtr,
     passwordLen,
     saltPtr,
     saltLen,
-    secretPtr,
-    secretLen,
     outputPtr,
-    params.outputLength,
-    argon2AlgorithmEnum[
-      params.algorithm.toLowerCase() as Lowercase<Argon2Algorithm>
-    ],
-    params.version,
-    params.mCost,
-    params.tCost,
-    params.pCost,
+    MAX_OUTPUT_BYTES,
+    finalOutputLenPtr,
+    versionEnum[finalParams.version],
+    finalParams.cost,
   );
 
   wasm.dealloc(passwordPtr, passwordLen);
   wasm.dealloc(saltPtr, saltLen);
-  if (secretPtr !== 0) {
-    wasm.dealloc(secretPtr, secretLen);
-  }
 
-  const output = new ArrayBuffer(params.outputLength);
+  // Copy output length from wasm memory into js
+  const outputLenBuffer =  new ArrayBuffer(16);
+  new Uint8Array(outputLenBuffer).set(
+    new Uint8Array(wasm.memory.buffer, finalOutputLenPtr, 16),
+  );
+  const outputLen = new DataView(outputLenBuffer).getUint32(0, true); // WASM uses little-endian
+
   // Copy output from wasm memory into js
+  const output = new ArrayBuffer(outputLen);
   new Uint8Array(output).set(
-    new Uint8Array(wasm.memory.buffer, outputPtr, params.outputLength),
+    new Uint8Array(wasm.memory.buffer, outputPtr, outputLen),
   );
 
-  wasm.dealloc(outputPtr, params.outputLength);
+  wasm.dealloc(outputPtr, MAX_OUTPUT_BYTES);
 
-  return output;
+  return new TextDecoder().decode(output);
+}
+
+/**
+ * Verifies a bcrypt hash against a password.
+ */
+export function verify(
+  password: BufferSource,
+  hash: string,
+): boolean {
+  const [passwordPtr, passwordLen] = transfer(password);
+  const [hashPtr, hashLen] = transfer(new TextEncoder().encode(hash));
+  const matchesPtr = wasm.alloc(MAX_MATCHES_BYTES);
+
+  wasm.verify(
+    passwordPtr,
+    passwordLen,
+    hashPtr,
+    hashLen,
+    matchesPtr,
+  );
+
+  wasm.dealloc(passwordPtr, passwordLen);
+  wasm.dealloc(hashPtr, hashLen);
+
+  // Copy result from wasm memory into js
+  const matchesBuffer =  new ArrayBuffer(MAX_MATCHES_BYTES);
+  new Uint8Array(matchesBuffer).set(
+    new Uint8Array(wasm.memory.buffer, matchesPtr, MAX_MATCHES_BYTES),
+  );
+  const matches = !!new DataView(matchesBuffer).getUint8(0);
+
+  wasm.dealloc(matchesPtr, MAX_MATCHES_BYTES);
+  
+  return matches;
 }

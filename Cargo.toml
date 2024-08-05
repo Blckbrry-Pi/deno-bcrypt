@@ -1,10 +1,10 @@
 [package]
-name = "argontwo"
-description = "argon2 hashing wasm module for deno"
+name = "bcrypt"
+description = "bcrypt hashing wasm module for deno"
 repository = "https://github.com/denosaurs/argontwo"
 license = "MIT"
 version = "0.1.0"
-authors = ["Elias Sjögreen"]
+authors = ["Skyler Calaman"]
 edition = "2021"
 publish = false
 
@@ -13,8 +13,9 @@ crate-type = ["cdylib"]
 path = "wasm/lib.rs"
 
 [dependencies]
-argon2 = { version = "0.5.2", features = ["alloc"] }
-talc = "3.1.1"
+bcrypt-no-getrandom = { version = "0.15.1", features = ["alloc"], default-features = false }
+talc = "4.4.1"
+spin = "0.9.8"
 
 [profile.release]
 opt-level = "s"

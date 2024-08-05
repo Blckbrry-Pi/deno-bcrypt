@@ -24,13 +24,17 @@ export const hash = instance.exports.hash as (
   passwordLen: number,
   saltPtr: number,
   saltLen: number,
-  secretPtr: number,
-  secretLen: number,
   outputPtr: number,
   outputLen: number,
-  algorithm: number,
+  finalOutputLen: number,
   version: number,
-  mCost: number,
-  tCost: number,
-  pCost: number,
+  cost: number,
+) => void;
+
+export const verify = instance.exports.verify as (
+  passwordPtr: number,
+  passwordLen: number,
+  hashPtr: number,
+  hashLen: number,
+  matches: number,
 ) => void;

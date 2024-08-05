@@ -1,14 +1,17 @@
 import { encodeBase64 } from "@std/encoding/base64";
 import { compress } from "@denosaurs/lz4";
 
-const name = "argontwo";
+const name = "bcrypt";
 
 await new Deno.Command("cargo", {
   args: ["build", "--release", "--target", "wasm32-unknown-unknown"],
 }).spawn().status;
 
+
+const targetFolder = Deno.env.get("CARGO_TARGET_DIR") || "target";
+
 const wasm = await Deno.readFile(
-  `./target/wasm32-unknown-unknown/release/${name}.wasm`,
+  `./${targetFolder}/wasm32-unknown-unknown/release/${name}.wasm`,
 );
 const encoded = encodeBase64(compress(wasm));
 const js = `// deno-fmt-ignore-file\n// deno-lint-ignore-file
