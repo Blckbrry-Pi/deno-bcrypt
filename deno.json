@@ -8,5 +8,19 @@
   },
   "tasks": {
     "build": "deno run -A scripts/build.ts"
+  },
+  "publish": {
+      "exclude": [
+        "**"
+      ],
+      "include": [
+        "wasm/*",
+        "scripts/*",
+        "*.md",
+        "*.ts",
+        "*.toml",
+        "deno.json",
+        "LICENSE"
+      ]
   }
 }
