@@ -7,7 +7,7 @@ support for deno and the web by providing [simple bindings](wasm/lib.rs) using
 ## Usage
 
 ```ts
-import { hash } from "jsr:@blackberry/bcrypt@0.15.4";
+import { hash } from "jsr:@blackberry/bcrypt@0.16.0";
 
 const encoder = new TextEncoder();
 

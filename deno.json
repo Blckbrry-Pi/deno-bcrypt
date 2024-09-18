@@ -1,6 +1,6 @@
 {
     "name": "@blackberry/bcrypt",
-    "version": "0.15.3",
+    "version": "0.16.0",
     "exports": "./mod.ts",
     "imports": {
         "@std/encoding": "jsr:@std/encoding@1.0.1",
