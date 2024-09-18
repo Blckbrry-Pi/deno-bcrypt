@@ -11,9 +11,9 @@ const salt = encode("saltsaltsaltsalt");
 
 Deno.test({
     name: "BCrypt 2b hash 10",
-    fn: () => {
+    fn: async () => {
         assertEquals(
-            hash(password, salt, {
+            await hash(password, salt, {
                 version: "2b",
                 cost: 10,
             }),
@@ -24,9 +24,9 @@ Deno.test({
 
 Deno.test({
     name: "BCrypt 2b hash 13",
-    fn: () => {
+    fn: async () => {
         assertEquals(
-            hash(password, salt, {
+            await hash(password, salt, {
                 version: "2b",
                 cost: 13,
             }),
@@ -37,28 +37,29 @@ Deno.test({
 
 Deno.test({
     name: "BCrypt 2b verify 10",
-    fn: () => {
-        const outputHash = hash(password, salt, {
+    fn: async () => {
+        const outputHash = await hash(password, salt, {
             version: "2b",
             cost: 10,
         });
 
-        assert(verify(password, outputHash));
 
-        assert(!verify(password2, outputHash));
+        assert(await verify(password, outputHash));
+
+        assert(!await verify(password2, outputHash));
     },
 });
 
 Deno.test({
     name: "BCrypt 2b verify 13",
-    fn: () => {
-        const outputHash = hash(password, salt, {
+    fn: async () => {
+        const outputHash = await hash(password, salt, {
             version: "2b",
             cost: 13,
         });
 
-        assert(verify(password, outputHash));
+        assert(await verify(password, outputHash));
 
-        assert(!verify(password2, outputHash));
+        assert(!await verify(password2, outputHash));
     },
 });

@@ -1,10 +1,11 @@
 {
     "name": "@blackberry/bcrypt",
-    "version": "0.15.2",
+    "version": "0.15.3",
     "exports": "./mod.ts",
     "imports": {
         "@std/encoding": "jsr:@std/encoding@1.0.1",
-        "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4"
+        "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4",
+        "@blckbrry/polywasm": "jsr:@blckbrry/polywasm@^0.1.4"
     },
     "tasks": {
         "build": "deno run -A scripts/build.ts"

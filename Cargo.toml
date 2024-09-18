@@ -3,7 +3,7 @@ name = "bcrypt"
 description = "bcrypt hashing wasm module for deno"
 repository = "https://github.com/Blckbrry-Pi/deno-bcrypt"
 license = "MIT"
-version = "0.15.2"
+version = "0.15.3"
 authors = ["Skyler Calaman"]
 edition = "2021"
 publish = false
@@ -13,10 +13,14 @@ crate-type = ["cdylib"]
 path = "wasm/lib.rs"
 
 [dependencies]
-bcrypt-no-getrandom = { version = "0.15.1", features = ["alloc"], default-features = false }
-talc = "4.4.1"
-spin = "0.9.8"
+bcrypt-no-getrandom = { version = "0.16.0", default-features = false }
+wee_alloc = "0.4.5"
 
 [profile.release]
 opt-level = "s"
 lto = true
+
+[profile.tiny]
+opt-level = "s"
+panic = "abort"
+inherits = "release"

@@ -1,24 +1,13 @@
 #![no_std]
+#![no_main]
 #![feature(alloc_error_handler, const_mut_refs, allocator_api)]
 
 extern crate alloc;
 
-
-use talc::*;
 use bcrypt_no_getrandom as bcrypt;
 
-// BCrypt only needs at most 4kb of RAM. Using 8kb to be safe.
-static mut START_ARENA: [u8; 8192] = [0; 8192];
-
-// The mutex provided by the `spin` crate is used here as it's a sensible choice
-
-// Allocations may occur prior to the execution of `main()`, thus support for
-// claiming memory on-demand is required, such as the ClaimOnOom OOM handler.
-
 #[global_allocator]
-static TALC: Talck<spin::Mutex<()>, ClaimOnOom> = Talc::new(unsafe {
-    ClaimOnOom::new(Span::from_const_array(&START_ARENA as *const _))
-}).lock();
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 extern "C" {
     fn panic(ptr: *const u8, len: usize);
@@ -29,7 +18,7 @@ extern "C" {
 pub fn panic_handler(info: &core::panic::PanicInfo) -> ! {
     let msg = alloc::format!("{info}");
     let ptr = msg.as_ptr();
-    let len = msg.len();
+    let len = msg.capacity();
     unsafe { panic(ptr, len) };
 
     loop {}
@@ -86,15 +75,11 @@ pub unsafe fn hash(
         _ => panic!("Invalid version: {version}"),
     };
 
-    let hash = bcrypt::hash_with_salt(password, cost, salt).expect("Failed to hash password");
-    let digest = hash.format_for_version(version);
+    bcrypt::hash_with_salt(password, cost, salt)
+        .expect("Failed to hash password")
+        .format_for_version_into(version, output);
 
-    if digest.len() > output_len {
-        panic!("Output buffer too small!");
-    }
-
-    output[..digest.len()].copy_from_slice(digest.as_bytes());
-    final_output_len.write(digest.len());
+    *final_output_len = 60;
 }
 
 #[no_mangle]
@@ -113,5 +98,5 @@ pub unsafe fn verify(
 
     let hash_matches = bcrypt::verify(password, hash).expect("Failed to verify hash");
 
-    matches.write(if hash_matches { 1 } else  { 0 });
+    matches.write(if hash_matches { 1 } else { 0 });
 }

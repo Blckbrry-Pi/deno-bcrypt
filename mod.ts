@@ -26,9 +26,9 @@ function transfer(buffer: BufferSource): [number, number] {
     return [pointer, length];
 }
 
-const OUTPUT_BYTES = 100;
-const OUTPUT_LEN_BYTES = 8;
-const MATCHES_BYTES = 4;
+const OUTPUT_BYTES = 60;
+const OUTPUT_LEN_BYTES = 4;
+const MATCHES_BYTES = 1;
 
 const SALT_BYTES = 16;
 
@@ -102,6 +102,7 @@ export function hash(
         new Uint8Array(wasm.memory.buffer, finalOutputLenPtr, OUTPUT_LEN_BYTES),
     );
     const outputLen = new DataView(outputLenBuffer).getUint32(0, true); // WASM uses little-endian
+    wasm.dealloc(finalOutputLenPtr, OUTPUT_LEN_BYTES);
 
     // Copy output from wasm memory into js
     const output = new ArrayBuffer(outputLen);

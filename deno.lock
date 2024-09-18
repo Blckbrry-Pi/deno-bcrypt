@@ -2,25 +2,47 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "jsr:@blckbrry/polywasm@^0.1.4": "jsr:@blckbrry/polywasm@0.1.4",
+      "jsr:@deno/cache-dir@0.8": "jsr:@deno/cache-dir@0.8.0",
+      "jsr:@deno/graph@^0.69.7": "jsr:@deno/graph@0.69.10",
       "jsr:@denosaurs/lz4@0.1.4": "jsr:@denosaurs/lz4@0.1.4",
-      "jsr:@std/assert@0.221": "jsr:@std/assert@0.221.0",
       "jsr:@std/assert@1.0.1": "jsr:@std/assert@1.0.1",
+      "jsr:@std/assert@^0.218.2": "jsr:@std/assert@0.218.2",
+      "jsr:@std/bytes@^0.218.2": "jsr:@std/bytes@0.218.2",
       "jsr:@std/encoding@0.221": "jsr:@std/encoding@0.221.0",
       "jsr:@std/encoding@1.0.1": "jsr:@std/encoding@1.0.1",
-      "jsr:@std/fmt@^0.221.0": "jsr:@std/fmt@0.221.0",
+      "jsr:@std/fmt@^0.218.2": "jsr:@std/fmt@0.218.2",
+      "jsr:@std/fs@^0.218.2": "jsr:@std/fs@0.218.2",
       "jsr:@std/internal@^1.0.1": "jsr:@std/internal@1.0.1",
+      "jsr:@std/io@^0.218.2": "jsr:@std/io@0.218.2",
+      "jsr:@std/path@^0.218.2": "jsr:@std/path@0.218.2",
+      "npm:@haribala/wasm2js": "npm:@haribala/wasm2js@1.1.1",
+      "npm:@haribala/wasm2js@1.1.1": "npm:@haribala/wasm2js@1.1.1",
       "npm:@phc/format": "npm:@phc/format@1.0.0",
       "npm:@types/node": "npm:@types/node@18.16.19"
     },
     "jsr": {
+      "@blckbrry/polywasm@0.1.4": {
+        "integrity": "5fac34b3dc13dc57c8feef337f81cd690b7f27d2058cb9cc7b454743beec9495"
+      },
+      "@deno/cache-dir@0.8.0": {
+        "integrity": "e87e80a404958f6350d903e6238b72afb92468378b0b32111f7a1e4916ac7fe7",
+        "dependencies": [
+          "jsr:@deno/graph@^0.69.7",
+          "jsr:@std/fmt@^0.218.2",
+          "jsr:@std/fs@^0.218.2",
+          "jsr:@std/io@^0.218.2",
+          "jsr:@std/path@^0.218.2"
+        ]
+      },
+      "@deno/graph@0.69.10": {
+        "integrity": "38fe22ac5686f6ece5daeec5a4df65c6314d7d32adcc33f77917a13cfaffa26f"
+      },
       "@denosaurs/lz4@0.1.4": {
         "integrity": "ad5d556c02eb01fe1e0f2e953d7be066a14870afe149b1aed1ced019460f6aa1"
       },
-      "@std/assert@0.221.0": {
-        "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a",
-        "dependencies": [
-          "jsr:@std/fmt@^0.221.0"
-        ]
+      "@std/assert@0.218.2": {
+        "integrity": "7f0a5a1a8cf86607cd6c2c030584096e1ffad27fc9271429a8cb48cfbdee5eaf"
       },
       "@std/assert@1.0.1": {
         "integrity": "13590ef8e5854f59e4ad252fd987e83239a1bf1f16cb9c69c1d123ebb807a75b",
@@ -28,20 +50,43 @@
           "jsr:@std/internal@^1.0.1"
         ]
       },
+      "@std/bytes@0.218.2": {
+        "integrity": "91fe54b232dcca73856b79a817247f4a651dbb60d51baafafb6408c137241670"
+      },
       "@std/encoding@0.221.0": {
         "integrity": "d1dd76ef0dc5d14088411e6dc1dede53bf8308c95d1537df1214c97137208e45"
       },
       "@std/encoding@1.0.1": {
         "integrity": "5955c6c542ebb4ce6587c3b548dc71e07a6c27614f1976d1d3887b1196cf4e65"
       },
-      "@std/fmt@0.221.0": {
-        "integrity": "379fed69bdd9731110f26b9085aeb740606b20428ce6af31ef6bd45ef8efa62a"
+      "@std/fmt@0.218.2": {
+        "integrity": "99526449d2505aa758b6cbef81e7dd471d8b28ec0dcb1491d122b284c548788a"
+      },
+      "@std/fs@0.218.2": {
+        "integrity": "dd9431453f7282e8c577cc22c9e6d036055a9a980b5549f887d6012969fabcca"
       },
       "@std/internal@1.0.1": {
         "integrity": "6f8c7544d06a11dd256c8d6ba54b11ed870aac6c5aeafff499892662c57673e6"
+      },
+      "@std/io@0.218.2": {
+        "integrity": "c64fbfa087b7c9d4d386c5672f291f607d88cb7d44fc299c20c713e345f2785f",
+        "dependencies": [
+          "jsr:@std/assert@^0.218.2",
+          "jsr:@std/bytes@^0.218.2"
+        ]
+      },
+      "@std/path@0.218.2": {
+        "integrity": "b568fd923d9e53ad76d17c513e7310bda8e755a3e825e6289a0ce536404e2662",
+        "dependencies": [
+          "jsr:@std/assert@^0.218.2"
+        ]
       }
     },
     "npm": {
+      "@haribala/wasm2js@1.1.1": {
+        "integrity": "sha512-PCZxbPNYJ3Nax1EPKb6oz2TSraSbhQyEXL2wZDlardsE7IwP6HHHVJVvDYWDz5p5HcASAvWRi74utGIepagTeA==",
+        "dependencies": {}
+      },
       "@phc/format@1.0.0": {
         "integrity": "sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==",
         "dependencies": {}
@@ -52,9 +97,52 @@
       }
     }
   },
-  "remote": {},
+  "redirects": {
+    "https://deno.land/x/emit/mod.ts": "https://deno.land/x/emit@0.40.0/mod.ts"
+  },
+  "remote": {
+    "https://deno.land/std@0.186.0/_util/asserts.ts": "178dfc49a464aee693a7e285567b3d0b555dc805ff490505a8aae34f9cfb1462",
+    "https://deno.land/std@0.186.0/_util/os.ts": "d932f56d41e4f6a6093d56044e29ce637f8dcc43c5a90af43504a889cf1775e3",
+    "https://deno.land/std@0.186.0/path/_constants.ts": "e49961f6f4f48039c0dfed3c3f93e963ca3d92791c9d478ac5b43183413136e0",
+    "https://deno.land/std@0.186.0/path/_interface.ts": "6471159dfbbc357e03882c2266d21ef9afdb1e4aa771b0545e90db58a0ba314b",
+    "https://deno.land/std@0.186.0/path/_util.ts": "d7abb1e0dea065f427b89156e28cdeb32b045870acdf865833ba808a73b576d0",
+    "https://deno.land/std@0.186.0/path/common.ts": "ee7505ab01fd22de3963b64e46cff31f40de34f9f8de1fff6a1bd2fe79380000",
+    "https://deno.land/std@0.186.0/path/glob.ts": "d479e0a695621c94d3fd7fe7abd4f9499caf32a8de13f25073451c6ef420a4e1",
+    "https://deno.land/std@0.186.0/path/mod.ts": "ee161baec5ded6510ee1d1fb6a75a0f5e4b41f3f3301c92c716ecbdf7dae910d",
+    "https://deno.land/std@0.186.0/path/posix.ts": "8b7c67ac338714b30c816079303d0285dd24af6b284f7ad63da5b27372a2c94d",
+    "https://deno.land/std@0.186.0/path/separator.ts": "0fb679739d0d1d7bf45b68dacfb4ec7563597a902edbaf3c59b50d5bcadd93b1",
+    "https://deno.land/std@0.186.0/path/win32.ts": "d186344e5583bcbf8b18af416d13d82b35a317116e6460a5a3953508c3de5bba",
+    "https://deno.land/x/bcrypt@v0.4.1/mod.ts": "ff09bdae282583cf5f7d87efe37ddcecef7f14f6d12e8b8066a3058db8c6c2f7",
+    "https://deno.land/x/bcrypt@v0.4.1/src/bcrypt/base64.ts": "b8266450a4f1eb6960f60f2f7986afc4dde6b45bd2d7ee7ba10789e67e17b9f7",
+    "https://deno.land/x/bcrypt@v0.4.1/src/bcrypt/bcrypt.ts": "ec221648cc6453ea5e3803bc817c01157dada06aa6f7a0ba6b9f87aae32b21e2",
+    "https://deno.land/x/bcrypt@v0.4.1/src/main.ts": "08d201b289c8d9c46f8839c69cd6625b213863db29775c7a200afc3b540e64f8",
+    "https://deno.land/x/bcrypt@v0.4.1/src/worker.ts": "5a73bdfee9c9e622f47c9733d374b627dce52fb3ec1e74c8226698b3fc57ffac",
+    "https://deno.land/x/bcrypt_ffi@v0.3.0/bindings/bindings.ts": "4baa8af6bd11a97f443d20000846fdbbbd10f85f5616e7395a9a0fc8f29cbe98",
+    "https://deno.land/x/bcrypt_ffi@v0.3.0/helper.ts": "70a035fd0cebb70a680b28dca6e7f949e91ecc301aa299844374c5706d72a7c3",
+    "https://deno.land/x/bcrypt_ffi@v0.3.0/mod.ts": "2dc3991ca869eccc6a831a13b7d3488fd139ceead2868263bbf73a97ffcb6fa7",
+    "https://deno.land/x/emit@0.40.0/_utils.ts": "98412edc7aa29e77d592b54fbad00bdec1b05d0c25eb772a5f8edc9813e08d88",
+    "https://deno.land/x/emit@0.40.0/emit.generated.js": "65621c730ae9e4e818a3f83913562101dc9a371befbdb44d81e09a1532af5089",
+    "https://deno.land/x/emit@0.40.0/mod.ts": "04b1818a60d6f85ca991bc4369634ea55d51388c4154b0100dfbe3c9684e2318",
+    "https://esm.sh/gh/evanw/polywasm@a0e542b5706cac5fbcb994bb0515a46324cc8810/src/index.ts": "a4b190aafd676849b9862422b40769b3a8a163a56e89d28e127541d2af3468dc",
+    "https://esm.sh/v135/gh/evanw/polywasm@a0e542b5706cac5fbcb994bb0515a46324cc8810/denonext/src/index.ts.js": "566199dac1b69efac91785b3b9a5334f9b226435aff88e7a2a024deb57b5df2f",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/compile.ts": "1be99d5262a6ebea1f6e539f2350076e17fc4184e9f15c74671255f2210e59b8",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/defs.ts": "43b703440590a956621008fb875516eb7886782f3e1e1e33867bc052c39c9ed7",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/index.ts": "61b3eb4000b1f73b2b460a6a698d862acbf288e81a3702ea0a75ad4cf2040e3f",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/instantiate.ts": "88f019889a58b10ca31269531540ce690bcb944d528473b52b7f0e00c705c1ba",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/library.ts": "6e882c37a5b4903cd737500d4854047e3e88d4c23346ac1a7840a53b749f3254",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/optimize.ts": "c7091765fc3af51e395bd24a22ba0dd67d54a3893b5ac68ca1e76d028d33edab",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/parse.ts": "5b4e8e812288e73f7975918bda40afa974b073393fb3fb92d902eb35f84820ce",
+    "https://raw.githubusercontent.com/Blckbrry-Pi/polywasm-deno/main/src/types.ts": "0b98203acb45312ba6a47cdc421f49e3bd05ba335a7277e2dbf81b29d9bc1cff",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/compile.ts": "515760ead777f844aee2ac1be41f012845da2d7911dd742785534817a62b6a76",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/index.ts": "f3bb3fc78c451bcb667abea4613786947cea0f75c9591761ada2faab094a6e23",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/instantiate.ts": "8f9f94c48ae139c245c96fde5247e9c211bdd54d97aba70325e69263271f7ff3",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/library.ts": "99bee2632e0b572fff81615dcde05a1b6d78330c4edcf2968c79d948aa0dd53d",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/optimize.ts": "cb7862d6967603a4aefb24f64dbd2ac097e35a81ee74666569d45a6eca78d364",
+    "https://raw.githubusercontent.com/evanw/polywasm/a0e542b5706cac5fbcb994bb0515a46324cc8810/src/parse.ts": "f32e05f2190251f641bdf20a2b92f7965c3f74f76973ae9e9bfca37c7a8f9f99"
+  },
   "workspace": {
     "dependencies": [
+      "jsr:@blckbrry/polywasm@^0.1.4",
       "jsr:@denosaurs/lz4@0.1.4",
       "jsr:@std/encoding@1.0.1"
     ]
