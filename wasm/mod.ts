@@ -1,6 +1,8 @@
 import { source } from "./wasm.js";
 export default async (_WebAssembly: typeof WebAssembly) => {
-    const { instance } = await _WebAssembly.instantiate(source, {
+    const wasmSource = await source(_WebAssembly);
+
+    const { instance } = await _WebAssembly.instantiate(wasmSource, {
         env: {
             panic: (ptr: number, len: number) => {
                 const msg = new TextDecoder().decode(

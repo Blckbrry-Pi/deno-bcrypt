@@ -1,6 +1,6 @@
 {
-    "name": "@blackberry/bcrypt",
-    "version": "0.17.0",
+    "name": "@blckbrry/bcrypt",
+    "version": "0.17.1",
     "exports": {
         ".": "./mod.ts",
         "./polyfill": "./mod_polyfill.ts",
@@ -8,7 +8,7 @@
     },
     "imports": {
         "@std/encoding": "jsr:@std/encoding@1.0.1",
-        "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4",
+        "@blckbrry/lz4": "jsr:@blckbrry/lz4@^0.1.6/polyfill",
         "@blckbrry/polywasm": "jsr:@blckbrry/polywasm@^0.1.4"
     },
     "tasks": {

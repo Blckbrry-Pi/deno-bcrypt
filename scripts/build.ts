@@ -1,5 +1,5 @@
 import { encodeBase64 } from "@std/encoding/base64";
-import { compress } from "@denosaurs/lz4";
+import { compress } from "@blckbrry/lz4";
 
 // Generate wasm
 {
@@ -28,7 +28,8 @@ import { compress } from "@denosaurs/lz4";
   // const encoded = encodeBase64(wasm);
   const js = `// deno-fmt-ignore-file\n// deno-lint-ignore-file
   import { decodeBase64 } from "jsr:@std/encoding@0.221/base64";
-  import { decompress } from "jsr:@denosaurs/lz4@0.1.4";
-  export const source = decompress(decodeBase64("${encoded}"));`;
+  import buildRuntime from "jsr:@blckbrry/lz4@0.1.6/runtime_agnostic";
+
+  export const source = async (WebAssembly) => (await buildRuntime(WebAssembly)).decompress(decodeBase64("${encoded}"));`;
   await Deno.writeTextFile("wasm/wasm.js", js);
 }
