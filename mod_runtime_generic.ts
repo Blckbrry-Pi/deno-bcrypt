@@ -31,7 +31,12 @@ const versionEnum: Record<BcryptVersion, number> = {
     "2b": "b".charCodeAt(0),
 };
 
-export default async (_WebAssembly: typeof WebAssembly) => {
+export type HashFunctionType = (password: BufferSource, salt?: BufferSource, params?: BcryptParams) => string;
+export type VerifyFunctionType = (password: BufferSource, hash: string) => boolean;
+
+export type BCryptRuntime = { hash: HashFunctionType, verify: VerifyFunctionType };
+
+export default async (_WebAssembly: typeof WebAssembly): Promise<BCryptRuntime> => {
     const wasm = await wasmBuilder(_WebAssembly);
 
     function bufferSourceArrayBuffer(data: BufferSource) {
