@@ -2,6 +2,7 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "jsr:@blckbrry/polywasm": "jsr:@blckbrry/polywasm@0.1.4",
       "jsr:@blckbrry/polywasm@^0.1.4": "jsr:@blckbrry/polywasm@0.1.4",
       "jsr:@deno/cache-dir@0.8": "jsr:@deno/cache-dir@0.8.0",
       "jsr:@deno/graph@^0.69.7": "jsr:@deno/graph@0.69.10",
