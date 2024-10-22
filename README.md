@@ -2,12 +2,15 @@
 
 This module provides [BCrypt](https://en.wikipedia.org/wiki/Bcrypt) hashing
 support for deno and the web by providing [simple bindings](wasm/lib.rs) using
-[bcrypt](https://github.com/Keats/rust-bcrypt) compiled to webassembly.
+[bcrypt](https://github.com/Blckbrry-Pi/rust-bcrypt-no-random) compiled to
+webassembly.
+
+A non-wasm version is available at `@blackberry/bcrypt@0.17.0/mod_polyfill`.
 
 ## Usage
 
 ```ts
-import { hash } from "jsr:@blackberry/bcrypt@0.16.0";
+import { hash } from "jsr:@blackberry/bcrypt@0.17.0";
 
 const encoder = new TextEncoder();
 
@@ -41,7 +44,7 @@ Will get to later
 
 - Skyler Calaman ([@skylercalaman](https://github.com/Blckbrry-Pi))
 
-### Original argon2 bindings by:
+### Original bcrypt bindings by:
 
 - Elias Sjögreen ([@eliassjogreen](https://github.com/eliassjogreen))
 
@@ -57,4 +60,5 @@ The author of this library is not responsible enough to use them anymore.
 
 ### License
 
+Copyright 2021, Denosaurs. All rights reserved. MIT license.
 Copyright 2024, Skyler Calaman. All rights reserved. MIT license.

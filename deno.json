@@ -1,7 +1,11 @@
 {
     "name": "@blackberry/bcrypt",
-    "version": "0.16.0",
-    "exports": "./mod.ts",
+    "version": "0.17.0",
+    "exports": {
+        ".": "./mod.ts",
+        "./polyfill": "./mod_polyfill.ts",
+        "./runtime_agnostic": "./mod_runtime_generic.ts"
+    },
     "imports": {
         "@std/encoding": "jsr:@std/encoding@1.0.1",
         "@denosaurs/lz4": "jsr:@denosaurs/lz4@0.1.4",
